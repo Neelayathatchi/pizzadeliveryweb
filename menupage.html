@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PizzaNova — Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --primary: #FF4C4C;
+            --secondary: #FFD166;
+            --success: #6AB547;
+            --dark: #1E1E1E;
+            --light: #FFFFFF;
+            --lightgray: #F9F9F9;
+            --orange: #FF7F00;
+            --transition: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .menu-card .badge {
+            background: #FFD700;
+            /* Golden yellow */
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1E1E1E;
+            /* Dark text for contrast */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .home-btn {
+            background-color: #FF4C4C;
+            color: #1E1E1E;
+            border-radius: 25px;
+            padding: 6px 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+        
+        .home-btn:hover {
+            background-color: #FF7F00;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        body {
+            background: var(--lightgray);
+            color: var(--dark);
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--dark);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        header nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        header nav input {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        
+        header nav button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            background: var(--primary);
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        header nav button:hover {
+            background: var(--orange);
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            width: 250px;
+            bottom: 0;
+            background: #fff;
+            color: #000;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .sidebar button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            background: var(--success);
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sidebar button:hover {
+            background: var(--primary);
+        }
+        
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+        
+        .eyebrow {
+            font-weight: 600;
+            color: var(--orange);
+            margin-bottom: 10px;
+        }
+        
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .carousel::-webkit-scrollbar-thumb {
+            background: var(--orange);
+            border-radius: 3px;
+        }
+        
+        .carousel-card {
+            min-width: 250px;
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .carousel-card img {
+            width: 100%;
+            height: 150px;
+            /* smaller height */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .carousel-card h4 {
+            margin: 10px 0 5px 0;
+            font-size: 1.05rem;
+        }
+        
+        .carousel-card p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .carousel-card .price {
+            font-weight: 700;
+            color: var(--success);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .menu-card {
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            padding: 10px;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .menu-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .menu-card .content {
+            padding: 15px;
+        }
+        
+        .menu-card .content h4 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .menu-card .content p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .menu-card .content .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .menu-card .badge {
+            background: var(--secondary);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .menu-card button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary);
+            color: var(--light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .menu-card button:hover {
+            background: var(--orange);
+        }
+        
+        .cart-sidebar {
+            position: fixed;
+            right: 0;
+            top: 60px;
+            width: 350px;
+            height: calc(100% - 60px);
+            background: var(--lightgray);
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+        
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .cart-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .cart-header button {
+            padding: 5px 10px;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            background: var(--light);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+        
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .cart-item .info {
+            flex: 1;
+            margin-left: 10px;
+        }
+        
+        .cart-item .info h5 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        
+        .cart-item .qty-controls {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .cart-item .qty-controls button {
+            background: var(--secondary);
+            border: none;
+            border-radius: 4px;
+            padding: 2px 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
+        .cart-footer {
+            margin-top: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: right;
+        }
+        /* Featured Items buttons */
+        
+        #featuredCarousel .carousel-card button {
+            background-color: #FF4C4C;
+            /* Featured: Red */
+            color: #fff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            box-shadow: 0 5px 15px rgba(255, 76, 76, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #featuredCarousel .carousel-card button:hover {
+            background-color: #FF7F00;
+            /* Orange hover */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 127, 0, 0.4);
+        }
+        /* Recommended Items buttons */
+        
+        #recommendations .carousel-card button {
+            background-color: #6AB547;
+            /* Recommended: Green */
+            color: #fff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            box-shadow: 0 5px 15px rgba(106, 181, 71, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #recommendations .carousel-card button:hover {
+            background-color: #FFD166;
+            /* Yellow hover */
+            color: #1E1E1E;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 209, 102, 0.4);
+        }
+        
+        @media(max-width:1024px) {
+            .main {
+                margin-left: 0;
+                padding-top: 80px;
+            }
+            .sidebar {
+                display: none;
+            }
+            .cart-sidebar {
+                top: 0;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Pizza Delivery🍕</div>
+        <nav>
+            <input type="text" placeholder="Search menu...">
+            <button onclick="toggleCart(true)">🛒 Cart</button>
+            <button class="home-btn" onclick="goHome()">🏠 Home</button>
+        </nav>
+    </header>
+
+    <div class="sidebar">
+        <h3>Categories</h3>
+        <button onclick="filterCategory('All')">All</button>
+        <button onclick="filterCategory('Pizza')">Pizza</button>
+        <button onclick="filterCategory('Pasta')">Pasta</button>
+        <button onclick="filterCategory('Drinks')">Drinks</button>
+        <button onclick="filterCategory('Dessert')">Dessert</button>
+    </div>
+
+    <div class="main">
+        <div class="eyebrow">Featured Items</div>
+        <div class="carousel" id="featuredCarousel"></div>
+
+        <div class="eyebrow">Recommended for You</div>
+        <div class="carousel" id="recommendations"></div>
+
+        <div class="filters">
+            <label>Max Price: $<span id="priceValue">25</span></label>
+            <input type="range" id="priceRange" min="4" max="25" value="25" step="0.5">
+        </div>
+
+        <div class="menu-grid" id="menuGrid"></div>
+    </div>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>🛒 Cart</h3>
+            <button onclick="toggleCart()">Close</button>
+        </div>
+        <div id="cartItems"></div>
+        <div class="cart-footer">Total: $<span id="cartTotal">0.00</span></div>
+    </div>
+
+    <script>
+        const categories = ['Pizza', 'Pasta', 'Drinks', 'Dessert'];
+
+        // 36 unique online food images from Unsplash
+        const imageUrls = [
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM139w1VU2mxRDne48cK0otWvdKTgEVjVtoSjfKQnbZ9ncSzI3ecjcMWYkQkmqUM3CWvE&usqp=CAU',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLDGkvzq93LTZqHCmvVpgOYG9EciyHzUOkEw&s',
+            'https://png.pngtree.com/png-clipart/20250108/original/pngtree-cold-drink-png-image_19596097.png',
+            'https://i.pinimg.com/736x/68/f8/38/68f838b09925e249ed62387c932da695.jpg',
+            'https://t3.ftcdn.net/jpg/06/28/20/20/360_F_628202093_EeheAyFFzA0KSRueYIulw3On5DEb4wws.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC36SZDzCIJKts_fgAZlSe3k2IdFrEMuhaTsT0j7G3cwB_jI-5HVxMPfUaW-Ibqb-Ek_o&usqp=CAU',
+            'https://static.vecteezy.com/system/resources/previews/046/791/446/non_2x/soft-drink-cup-illustration-suitable-for-carbonated-drink-soda-and-beverages-cartoon-element-free-vector.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXRfLbxkbrD5DzzOv-hIzms_oAA2jYN5QS8STuSH4sWYoulwh9wFicz6-Cyj223Lv-idA&usqp=CAU',
+            'https://t4.ftcdn.net/jpg/06/12/86/55/360_F_612865532_Z3IdQ1ii37bVs64fC1JqwhL9unfSu2nw.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlnz9LvC11b8DkdQybjPJeGCeghmAijAQUWac5she4up9c2EmA0Tuci0FDYpFzR4D4_0E&usqp=CAU',
+            'https://static.vecteezy.com/system/resources/previews/012/507/429/non_2x/soft-drink-illustration-cartoon-food-and-drink-logo-cold-cola-drinks-icon-symbol-free-vector.jpg',
+            'https://st.depositphotos.com/1137361/1317/v/950/depositphotos_13176100-stock-illustration-cartoon-cake.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM139w1VU2mxRDne48cK0otWvdKTgEVjVtoSjfKQnbZ9ncSzI3ecjcMWYkQkmqUM3CWvE&usqp=CAU',
+            'https://t4.ftcdn.net/jpg/10/37/73/47/360_F_1037734735_womp9hcXKr9kzbH6O0nvaaTMtVTmLM1q.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmPwPF7UHE9LyKpy9WmovQysRMKsexteKFfSSegTPjj86WRJ6oDyZOc8AF7x3ofEOST1E&usqp=CAU',
+            'https://www.shutterstock.com/image-vector/birthday-cake-strawberry-simple-isolated-600nw-2498725057.jpg',
+            'https://www.shutterstock.com/image-vector/pizzaflat-coloring-styleillustration-children-260nw-761800429.jpg',
+            'https://img.freepik.com/premium-vector/kawaii-pasta-clipart-set_759312-75.jpg',
+            'https://c8.alamy.com/comp/2EAGN0G/cartoon-takeaway-soda-drink-in-a-covered-cup-with-a-straw-with-a-happy-smiling-face-isolated-on-white-2EAGN0G.jpg',
+            'https://st.depositphotos.com/1137361/1317/v/950/depositphotos_13176100-stock-illustration-cartoon-cake.jpg',
+            'https://t4.ftcdn.net/jpg/06/35/91/17/360_F_635911739_iX7u4TIVBQjnfFHQqZLvy73Thw5PYoL8.jpg',
+            'https://i.pinimg.com/564x/c9/18/84/c9188488f6470f804446a4580217a03b.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4j6tm7tVm7ek19o7aA9E9heKHm_I89Y3TokNj2vEbufMRSJXqap33nLA3w61Nl8R2iC4&usqp=CAU',
+            'https://www.shutterstock.com/image-vector/sweet-doughnuts-cartoon-donuts-different-600nw-2463807949.jpg',
+            'https://media.istockphoto.com/id/1447143335/vector/cute-cartoon-pizza-slice-character-with-cheesy-toppings-in-vector-illustration.jpg?s=612x612&w=0&k=20&c=dFxE_-GsQ-XpBlcBeABtpBON-xKX_Oxm-hf-DzN5bLE=',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPPBb178sxEfPrviUAEk38qVbvtN-2gHWEO4W-t3SleVAYUTkvfd78ih0Q1PkY4yU4I4&usqp=CAU',
+            'https://i.pinimg.com/736x/62/4b/cf/624bcf5e5da88e1b30bc0343b17e7516.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpU5BtipuBzuGPf9u4i9a2CuvQ0CKROOcJsw&s',
+            'https://t4.ftcdn.net/jpg/06/35/91/17/360_F_635911739_iX7u4TIVBQjnfFHQqZLvy73Thw5PYoL8.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTVIVYIWdC-Gr_KGRI-hy34zJHSY5Ylzae2dKPiwXHvmR10dfLIdI1qIXjNzDP5ZxKY84&usqp=CAU',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM3Isam32C-_6DnvnPwgvpRO6S542jj9nee0UI8u3BJwJn3luH-upsqRjVrqcA1NIw40Q&usqp=CAU',
+            'https://i.fbcd.co/products/resized/resized-750-500/s220429-sweet-candies-e43-mainpreview-0bb70150c9c156dbe5f67ef5cb88e307cc054e0f6ff3ad0b0b3a38b967a1b018.jpg',
+            'https://t4.ftcdn.net/jpg/07/24/12/67/360_F_724126701_4aWTD55W6UYjcEAkFaArrTJCgikqdprF.jpg',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWDtXpCtEcbTuTthHZKp7iRe1DyRbrbptSOeFbCzRFYu685ReD7EVxotihJEVugZ9z4UQ&usqp=CAU',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0ZKy4NfHEjiI2-TJcSQ6H7TiS30_a726nhYTK3ZmPSDfIxJu_Xp7goZ0EdPnEHs1FG9U&usqp=CAU',
+            'https://www.shutterstock.com/image-vector/vector-cakes-sweetscartoon-cake-illustration-600nw-2308663175.jpg'
+        ];
+
+        // Create MENU array
+        const MENU = [];
+        for (let i = 0; i < 36; i++) {
+            MENU.push({
+                id: 'item' + (i + 1),
+                name: `Delicious Item ${i + 1}`,
+                category: categories[i % 4],
+                price: (Math.random() * 20 + 4).toFixed(2),
+                img: imageUrls[i],
+                bestseller: i % 5 === 0 // Add badge every 5th item
+            });
+        }
+
+        // Cart array
+        let cart = [];
+
+        // Render Carousel
+        function renderCarousel(id, items) {
+            const container = document.getElementById(id);
+            container.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'carousel-card';
+                div.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <h4>${item.name}</h4>
+            <p class="price">$${item.price}</p>
+            <button onclick="addToCart('${item.id}')">🛒 Add to Cart</button>
+        `;
+                container.appendChild(div);
+            });
+        }
+
+        // Render Menu Grid
+        function renderMenu(filterCat = 'All') {
+            const container = document.getElementById('menuGrid');
+            const maxPrice = parseFloat(document.getElementById('priceRange').value);
+            container.innerHTML = '';
+            MENU.filter(item => (filterCat === 'All' || item.category === filterCat) && item.price <= maxPrice).forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'menu-card';
+                        div.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <div class="content">
+                <h4>${item.name}</h4>
+                <p>${item.category}</p>
+                <div class="meta">
+                    ${item.bestseller ? `<span class="badge" style="background:#FFD700; color:#000;">Bestseller</span>` : ''}
+                    <span class="price">$${item.price}</span>
+                </div>
+                <button onclick="addToCart('${item.id}')">🛒 Add to Cart</button>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// Cart Functions
+function addToCart(id) {
+    const item = MENU.find(m => m.id === id);
+    const cartItem = cart.find(c => c.id === id);
+    if (cartItem) {
+        cartItem.qty += 1;
+    } else {
+        cart.push({ ...item, qty: 1 });
+    }
+    updateCart();
+    toggleCart(true);
+}
+
+function updateCart() {
+    const container = document.getElementById('cartItems');
+    container.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        total += item.price * item.qty;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <div class="info">
+                <h5>${item.name}</h5>
+                <div class="qty-controls">
+                    <button onclick="changeQty('${item.id}',-1)">-</button>
+                    <span>${item.qty}</span>
+                    <button onclick="changeQty('${item.id}',1)">+</button>
+                </div>
+            </div>
+            <span>$${(item.price * item.qty).toFixed(2)}</span>
+        `;
+        container.appendChild(div);
+    });
+    document.getElementById('cartTotal').innerText = total.toFixed(2);
+}
+
+function changeQty(id, delta) {
+    const item = cart.find(c => c.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+    updateCart();
+}
+
+function toggleCart(show) {
+    const sidebar = document.getElementById('cartSidebar');
+    if (show === true) sidebar.classList.add('active');
+    else sidebar.classList.toggle('active');
+}
+
+// Filters
+document.getElementById('priceRange').addEventListener('input', e => {
+    document.getElementById('priceValue').innerText = e.target.value;
+    renderMenu();
+});
+
+function filterCategory(cat) {
+    renderMenu(cat);
+}
+
+// Initial Render
+renderCarousel('featuredCarousel', MENU.slice(0, 6));
+renderCarousel('recommendations', MENU.slice(6, 12));
+renderMenu();
+
+function goHome() {
+    window.location.href = 'index.html';
+}
+    </script>
+</body>
+
+</html>

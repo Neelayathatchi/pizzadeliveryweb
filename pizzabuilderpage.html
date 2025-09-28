@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PizzaNova - Pizza Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --tomato-red: #FF4C4C;
+            --cream: #FFF4E1;
+            --white: #FFFFFF;
+            --charcoal: #1E1E1E;
+            --green: #6AB547;
+            --blue: #4C9EFF;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: var(--cream);
+            color: var(--charcoal);
+            font-weight: 700;
+            overflow-x: hidden;
+        }
+        /* Sidebar */
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100vh;
+            background: var(--charcoal);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .sidebar h2 {
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: 800;
+            color: var(--tomato-red);
+        }
+        
+        .sidebar nav a {
+            padding: 0.8rem 1.5rem;
+            display: block;
+            transition: 0.3s;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .sidebar nav a.active,
+        .sidebar nav a:hover {
+            background: var(--tomato-red);
+        }
+        /* Header */
+        
+        .header {
+            margin-left: 240px;
+            height: 60px;
+            background: var(--tomato-red);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            color: white;
+        }
+        
+        .header .profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .header .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        /* Main Section */
+        
+        .main {
+            margin-left: 240px;
+            margin-top: 0;
+            padding: 2rem;
+        }
+        
+        .section {
+            display: none;
+            padding: 2rem 0;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        /* Pizza Builder */
+        
+        .pizza-builder {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .step-box {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        
+        .step-box.right {
+            flex-direction: row-reverse;
+        }
+        
+        .step-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--tomato-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--tomato-red);
+        }
+        
+        .step-content p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step-content .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .step-content .option {
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--tomato-red);
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+        }
+        
+        .step-content .option.selected {
+            background: var(--tomato-red);
+            color: white;
+        }
+        
+        .finish-btn,
+        .reset-btn {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+        
+        .finish-btn {
+            background: var(--green);
+        }
+        
+        .reset-btn {
+            background: var(--tomato-red);
+            margin-left: 1rem;
+        }
+        /* Progress Bar */
+        
+        .progress-bar-container {
+            width: 100%;
+            background: #eee;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--tomato-red);
+            transition: 0.5s;
+        }
+        /* Celebration effect */
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            z-index: 2000;
+            flex-wrap: wrap;
+            gap: 2rem;
+            animation: fadeOut 4s forwards;
+        }
+        
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        @media(max-width:768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            .header {
+                margin-left: 0;
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+            }
+            .main {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            .step-box {
+                flex-direction: column;
+            }
+            .step-box.right {
+                flex-direction: column;
+            }
+            .step-number {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Pizza Delivery 🍕</h2>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#" data-section="builder" class="active">Pizza Builder</a>
+            <a href="menupage.html">Menu</a>
+            <a href="#" data-section="deals">Deals</a>
+            <a href="#" data-section="testimonials">Testimonials</a>
+            <a href="#" data-section="contact">Contact</a>
+            <a href="#" data-section="dashboard">Dashboard</a>
+            <a href="#" data-section="cart">Cart</a>
+            <a href="#" data-section="tracking">Tracking</a>
+            <a href="#" data-section="inventory">Inventory</a>
+            <a href="#" data-section="offers">Offers</a>
+            <a href="#" data-section="feedback">Feedback</a>
+            <a href="#" data-section="profile">Profile</a>
+            <a href="#" data-section="orders">Past Orders</a>
+            <a href="#" data-section="analytics">Analytics</a>
+            <a href="#" data-section="faq">FAQ</a>
+
+        </nav>
+    </div>
+
+    <div class="header">
+        <h1>Pizza Builder 🍕</h1>
+        <div class="profile">
+            <span>Admin</span>
+            <img src="https://i.pravatar.cc/40" alt="profile">
+        </div>
+    </div>
+
+    <div class="main">
+        <section class="section active" id="builder">
+            <h2 style="text-align:center; font-size:2rem; color:var(--tomato-red); margin-bottom:1rem;">Customize Your Pizza 🍕</h2>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="pizza-builder" id="pizzaBuilder">
+                <!-- Step 1 -->
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Choose Your Base</h3>
+                        <p>Select the perfect foundation for your pizza.</p>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(this)">Thin Crust</div>
+                            <div class="option" onclick="selectOption(this)">Thick Crust</div>
+                            <div class="option" onclick="selectOption(this)">Cheese Burst</div>
+                            <div class="option" onclick="selectOption(this)">Gluten-Free</div>
+                            <div class="option" onclick="selectOption(this)">Whole Wheat</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-box right">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Pick Sauce & Cheese</h3>
+                        <p>Choose sauces and your favorite cheese.</p>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(this)">Tomato Sauce</div>
+                            <div class="option" onclick="selectOption(this)">Barbecue Sauce</div>
+                            <div class="option" onclick="selectOption(this)">Pesto Sauce</div>
+                            <div class="option" onclick="selectOption(this)">Mozzarella</div>
+                            <div class="option" onclick="selectOption(this)">Cheddar</div>
+                            <div class="option" onclick="selectOption(this)">Vegan Cheese</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Select Toppings</h3>
+                        <p>Customize with fresh veggies and meats.</p>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(this)">Mushrooms</div>
+                            <div class="option" onclick="selectOption(this)">Capsicum</div>
+                            <div class="option" onclick="selectOption(this)">Onions</div>
+                            <div class="option" onclick="selectOption(this)">Tomatoes</div>
+                            <div class="option" onclick="selectOption(this)">Pepperoni</div>
+                            <div class="option" onclick="selectOption(this)">Bacon</div>
+                            <div class="option" onclick="selectOption(this)">Olives</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="step-box right">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Extra Flavors</h3>
+                        <p>Add herbs, spices or extra cheese.</p>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(this)">Oregano</div>
+                            <div class="option" onclick="selectOption(this)">Chili Flakes</div>
+                            <div class="option" onclick="selectOption(this)">Garlic</div>
+                            <div class="option" onclick="selectOption(this)">Extra Cheese</div>
+                            <div class="option" onclick="selectOption(this)">Thyme</div>
+                            <div class="option" onclick="selectOption(this)">Rosemary</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finish -->
+                <div class="step-box">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Finalize Your Pizza</h3>
+                        <p>Review and confirm your pizza creation.</p>
+                        <button class="finish-btn" onclick="finishPizza()">Finish & Celebrate 🎉</button>
+                        <button class="reset-btn" onclick="resetPizza()">Reset Pizza 🔄</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Celebration Container -->
+    <div id="celebrationContainer"></div>
+
+    <script>
+        const selections = {};
+        const options = document.querySelectorAll('.builder-option');
+
+        const progressBar = document.getElementById('progressBar');
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const parent = option.parentElement;
+                const stepId = parent.id.replace('Options', '');
+                // Deselect all
+                parent.querySelectorAll('.builder-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selections[stepId] = option.dataset.name;
+                updateProgress();
+            });
+        });
+
+
+        function selectOption(element) {
+            const parent = element.closest('.step-content');
+            const allOptions = parent.querySelectorAll('.option');
+            allOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+
+            const stepTitle = parent.querySelector('h3').innerText;
+            selections[stepTitle] = element.innerText;
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalSteps = document.querySelectorAll('.step-box').length - 1;
+            const completed = Object.keys(selections).length;
+            progressBar.style.width = ((completed / totalSteps) * 100) + '%';
+        }
+
+        function resetPizza() {
+            // Clear selections object
+            Object.keys(selections).forEach(key => delete selections[key]);
+
+            // Remove 'selected' class from all options
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+
+            // Reset progress bar
+            progressBar.style.width = '0%';
+
+            // Remove celebration if exists
+            const celebrationContainer = document.getElementById('celebrationContainer');
+            celebrationContainer.innerHTML = '';
+            celebrationContainer.classList.remove('celebration');
+        }
+
+        function finishPizza() {
+            const totalSteps = document.querySelectorAll('.step-box').length - 1;
+            if (Object.keys(selections).length < totalSteps) {
+                alert('Please complete all steps before finishing!');
+                return;
+            }
+
+            // Celebration Effect
+            const celebrationContainer = document.getElementById('celebrationContainer');
+            celebrationContainer.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');
+                span.innerText = '🍕';
+                span.style.position = 'absolute';
+                span.style.top = Math.random() * window.innerHeight + 'px';
+                span.style.left = Math.random() * window.innerWidth + 'px';
+                span.style.fontSize = (20 + Math.random() * 50) + 'px';
+                span.style.animation = `floatUp ${2 + Math.random() * 3}s ease forwards`;
+                celebrationContainer.appendChild(span);
+            }
+            celebrationContainer.classList.add('celebration');
+
+
+            // Show summary
+            let summary = "🎉 Your Pizza Selection 🎉\n\n";
+            for (const [step, value] of Object.entries(selections)) {
+                summary += `- ${step}: ${value}\n`;
+            }
+            alert(summary);
+        }
+    </script>
+
+    <style>
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+
+</html>
